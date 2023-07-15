@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>{TITLE}</dc:title>
+    <dc:creator opf:role="aut">{AUTHOR}</dc:creator>
+    <dc:language>ko</dc:language>
+    <meta content="0.9.12" name="Sigil version" />
+    <dc:date opf:event="modification">{DATE}</dc:date>
+    <dc:date>{DATE}</dc:date>
+    <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:text2epub-{CURRENT_DATETIME}</dc:identifier>
+    <meta name="cover" content="cover.jpg" />
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="cover.xhtml" href="Text/cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="stylesheet.css" href="Styles/stylesheet.css" media-type="text/css"/>
+    <item id="KoPubBatangLight.otf" href="Fonts/KoPubBatangLight.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="KoPubBatangMedium.otf" href="Fonts/KoPubBatangMedium.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="KoPubDotumBold.ttf" href="Fonts/KoPubDotumBold.ttf" media-type="application/x-font-ttf"/>
+    <item id="KoPubDotumLight.otf" href="Fonts/KoPubDotumLight.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="Section0001.xhtml" href="Text/Section0001.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover.jpg" href="Images/cover.jpg" media-type="image/jpeg"/>{CONTENT1}
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="cover.xhtml"/>{CONTENT2}
+  </spine>
+  <guide>
+    <reference type="cover" title="표지" href="Text/cover.xhtml"/>
+  </guide>
+</package>

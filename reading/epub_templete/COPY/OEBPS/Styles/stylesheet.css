@@ -1,0 +1,316 @@
+ @font-face { font-family: "kopubbl"; src: url(../Fonts/KoPubBatangLight.otf); }
+ @font-face { font-family: "kopubbm"; src: url(../Fonts/KoPubBatangMedium.otf); }
+ @font-face { font-family: "kopub_dot_b"; src: url(../Fonts/KoPubDotumBold.ttf); }
+ @font-face { font-family: "kopub_dot_l"; src: url(../Fonts/KoPubDotumLight.otf); }
+
+
+/*이미지배치*/
+
+.w98
+{
+	padding-right: 0.001em;
+	padding-left: 0.001em;
+	padding-top: 0.01em;
+	padding-bottom: 0.01em;	
+	float: center;
+	width: 100%;
+}
+
+.fullpage
+{
+	width: 99%;
+	height: 99%;
+	margin: 0 0 6% 0;
+	padding:0;
+}
+
+.left
+{
+	float : left;
+	padding-left: 0.5em;
+	padding-top: 0.0em;
+	padding : 0.5em;
+	padding-bottom: 1.0em;	
+}
+
+.right
+{
+	float : right;
+	padding-right: 0.5em;
+	padding-top: 0.0em;
+	padding : 0.5em;
+	padding-bottom: 1.0em;	
+}
+
+.l50
+{
+	float : left;
+	padding-right: 0.7em;
+	padding-left: 0.3em;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	width: 40%;
+}
+
+.r50
+{
+	float : right;
+	padding-right: 0.3em;
+	padding-left: 0.7em;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	width: 40%;
+}
+
+table.bg-pl
+{
+	border-color:none;
+	background-color:#ffffff;
+	line-height:1.5em;
+	border-style:line;
+	border-width:0px;
+	margin-top:0em
+	margin-bottom:0em;
+	margin-right:1.00em;
+	margin-left:1.00em;
+	padding:0;
+}
+
+
+/*저자소개*/
+
+span.text-w
+{
+	font-family:"kopub_dot_l";
+    font-weight: bold;
+    font-size:0.9em;
+	line-height:1.50;
+}
+
+span.text-w1
+{
+	font-family:"kopub_dot_b";
+	font-style:bold;
+	font-size:1.3em;
+	line-height:1.50;
+	color:#333333;
+}
+
+span.text-w2
+{
+	font-family:"kopub_dot_l";
+    font-size:0.75em;
+	line-height:1.30;
+}
+
+
+/*이미지 안의 텍스트*/
+
+span.text-big
+{
+    font-family: "kopubbm";
+    font-weight: normal;
+	font-size:1.500em;
+	line-height:1.80em;
+	margin: 0em;
+	text-indent:0.00em;
+}
+
+span.text-in01
+{
+    font-family: "kopubbm";
+	font-style:normal;
+    font-size: 1.3000em;
+    line-height: 1.80em;
+    margin: 0em;
+    color: #444444;
+}
+
+span.text-in02
+{
+    font-family: "kopub_dot_b";
+    font-size: 0.95em;
+    font-style: normal;
+    line-height: 1.80em;
+    text-align: justify;
+    color: #666666;
+    text-decoration: underline;
+}
+
+span.text-in03
+{
+	font-family: "kopub_dot_b";
+    font-size: 0.95em;
+    font-style: normal;
+    line-height: 1.80em;
+	text-align:justify;
+    color: #777777;
+}
+
+span.text-ch01
+{
+	font-family:"kopubbm";
+	font-style:normal;
+    font-size: 1.500em;
+    line-height: 1.10em;
+    color: #ffffff;
+}
+
+span.text-ch02
+{
+	font-family:"kopubbm";
+	font-style:normal;
+    font-size: 1.00em;
+    line-height: 1.00em;
+    color: #ffffff;
+}
+
+span.text-ch03
+{
+	font-family:"kopubbm";
+	font-style:normal;
+    font-size: 1.20em;
+    line-height: 1.80em;
+    color: #ffffff;
+}
+
+
+/*본문*/
+
+p.basic-1
+{
+	font-family:"kopubbl";
+    font-weight: normal;
+	font-size:1.000em;
+	line-height:1.80em;
+	text-align:justify;
+	margin: 0em;
+	text-indent:1.00em;
+}
+
+p.basic-2
+{
+	font-family:"kopubbl";
+	font-weight: normal;
+	font-size:1.000em;
+	line-height:1.80em;
+	text-align:justify;
+	margin: 0em;
+	text-indent:0.00em;
+}
+
+p.basic-3
+{
+	font-family:"kopubbl";
+	font-style:normal;
+	line-height:1.30em;
+	text-align:justify;
+	margin: 0em;
+	text-indent:0.00em;
+}
+
+span.text-1
+{
+	font-family: "kopub_dot_l";
+    font-size: 0.75em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.6em;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: justify;
+    text-indent: 0em;
+	color:#666666;
+}
+
+span.text-3
+{
+	font-family:"kopubbl";
+	font-style:normal;
+    font-weight: normal;
+	font-size:0.90em;
+	line-height:1.800em;
+	text-align:justify;
+}
+
+span.text-ca
+{
+	font-family:"kopubbl";
+	font-style:normal;
+	font-size:0.80em;
+	line-height:1.00em;
+	text-align:justify;
+	color:#666666;
+}
+
+span.text-in
+{
+	font-family:"kopubbl";
+    font-size: 0.9200em;
+    line-height:1.50em;
+    text-align:justify;
+    color:#333333;
+}
+
+span.text-4
+{
+	font-family: "kopub_dot_l";
+    font-size: 0.95em;
+    font-style: normal;
+	line-height:1.5em;
+	text-align:justify;
+}
+
+span.text-ii
+{
+	font-family: "나눔명조";
+    font-weight: normal;
+	font-size: 1.000em;
+	line-height: 1.80;
+    font-style: italic;
+}
+
+
+/*주석숫자*/
+
+span.text-sub
+{
+	font-family:"나눔고딕";
+	font-style:normal;
+	font-size:0.800em;
+    color:#333333;
+	line-height:1.80em;
+	text-align:justify; 
+    vertical-align:super;
+	text-indent:0.20em;
+}
+
+span.text-sup
+{
+	font-family:"나눔고딕";
+	font-style:normal;
+	font-size:0.70em;
+    color:#242424;
+	line-height:1.80em;
+	text-align:justify; 
+    vertical-align:sup;
+	text-indent:0.20em;
+}
+
+/***** 스타일 선언 끝 *****/
+
+.bgcolor1
+{
+	background-color: #f15a52;
+}
+
+.bgcolor2
+{
+	background-color: #dddddd;
+}
