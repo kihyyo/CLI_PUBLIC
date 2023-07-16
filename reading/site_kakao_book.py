@@ -80,6 +80,7 @@ class SiteKakaoBook(SiteKakaoBook):
                 entity['author'] = item['authors'][0]
                 entity['publisher'] = item['publisher']
                 entity['description'] = item['contents']
+                entity['is_completed'] = '완결'
                 #logger.warning(idx)
                 result_list.append(entity)
         else:
