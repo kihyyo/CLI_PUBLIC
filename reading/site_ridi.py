@@ -36,16 +36,21 @@ class SiteRidi(object):
         if response.status_code == 200 :   
             res = response.json()
             for r in res['book']['books']:
-                if r['series_prices_info'] != []:
-                    entity = {}
+                entity = {}
+                try:
                     entity['code'] = r['series_prices_info'][0]['series_id']
-                    entity['title'] = r['web_title_title'].strip()
-                    entity['author'] = ''
-                    for author in r['authors_info']:
-                        if author['role'] == 'original_author':
-                            entity['author'] = author['name']
-                    entity['publisher'] = r['publisher']
-                    result_list.append(entity)
+                except:
+                    try:
+                        entity['code'] = r['b_id']
+                    except:
+                        entity['code'] = ''
+                entity['title'] = r['web_title_title'].strip()
+                entity['author'] = ''
+                for author in r['authors_info']:
+                    if author['role'] == 'original_author':
+                        entity['author'] = author['name']
+                entity['publisher'] = r['publisher']
+                result_list.append(entity)
             ret['ret'] = 'success'
             ret['data'] = result_list
         else:
