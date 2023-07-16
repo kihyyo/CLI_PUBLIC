@@ -40,7 +40,7 @@ class SiteRidi(object):
                 if r['series_prices_info'] != []:
                     entity = {}
                     entity['code'] = r['series_prices_info'][0]['series_id']
-                    entity['title'] = r['title']
+                    entity['title'] = r['web_title_title'].strip()
                     entity['author'] = ''
                     for author in r['authors_info']:
                         if author['role'] == 'original_author':
