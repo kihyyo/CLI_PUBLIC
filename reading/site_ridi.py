@@ -84,7 +84,9 @@ class SiteRidi(object):
             ret['poster'] = cover
             genre_list = []
             for genre in soup.select('.info_category_wrap > a'):
-                genre_list.append(genre.text.strip())
+                ger = genre.text.strip()
+                if not ger in ['만화 e북', '판타지 e북']:
+                    genre_list.append(ger)
             ret['genre'] = list(set(genre_list))
             ret['author'] = str(author_list).replace('[','').replace(']','').replace("'",'').replace(', ',',')
             ret['publisher'] = soup.select('.publisher_detail_link')[-1].text.strip()
