@@ -199,7 +199,8 @@ class MakeInfo:
                 #title = info['title'].replace('. 1', '').strip()
                 title = re.sub('\.\s\d+$', '', info['title']).strip()
                 title = re.sub("\(양장본.|Hardcover\)","",title)
-                title = title.replace('개정판 ｜ ','')+"(개정판)"
+                if '개정판 ｜ ' in title:
+                    title = title.replace('개정판 ｜ ','')+"(개정판)"
                 # try:
                 #     if int(title[-1:])>1:
                 #         title = title[:-1].strip()
