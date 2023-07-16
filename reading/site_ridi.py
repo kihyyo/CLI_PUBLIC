@@ -68,7 +68,7 @@ class SiteRidi(object):
             for author in author:
                 author_list.append(author.text.strip())
             ret = {}
-            ret['title'] =  soup.select('.info_title_wrap')[0].text.replace('\(개정판\)','').strip()
+            ret['title'] =  soup.select('.info_title_wrap')[0].text.strip()
             try:
                 ret['desc'] = soup.select('.introduce_paragraph > br')[0].text.strip()
             except:
@@ -79,10 +79,17 @@ class SiteRidi(object):
                     logger.error(traceback.format_exc())
             ret['premiered'] = re.search('\d{4}\.\d{2}\.\d{2}\.', date).group().replace('.','').strip()
             ret['poster'] = cover
-            ret['genre'] = soup.select('.info_category_wrap > a')[-1].text.strip()
+            genre_list = []
+            for genre in soup.select('.info_category_wrap > a'):
+                genre_list.append(genre.text.strip())
+            ret['genre'] = list(set(genre_list))
             ret['author'] = str(author_list).replace('[','').replace(']','').replace("'",'').replace(', ',',')
             ret['publisher'] = soup.select('.publisher_detail_link')[-1].text.strip()
-            ret['tag'] = ['리디']
+            tags = []
+            keyword = soup.select('.keyword_button')
+            for keyword in keyword:
+                tags.append(keyword.text.replace('#',''))
+            ret['tag'] = tags
             return ret
         except Exception as exception:
             logger.error('Exception:%s', exception)
