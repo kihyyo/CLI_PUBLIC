@@ -29,7 +29,6 @@ class SiteRidi(object):
 
     @classmethod
     def search(cls, title):
-        logger.debug(title)
         url = f'https://ridibooks.com/api/search-api/search?keyword={quote(title)}&adult_exclude=n&where%5B%5D=book&where%5B%5D=author&what=instant&site=ridi-store'
         response = requests.get(url, headers=cls.default_headers)
         ret = {}
@@ -52,7 +51,6 @@ class SiteRidi(object):
         else:
             logger.warning("검색 실패")
             ret['ret'] = 'empty'
-
         return ret
     
     @classmethod
@@ -68,7 +66,7 @@ class SiteRidi(object):
             for author in author:
                 author_list.append(author.text.strip())
             ret = {}
-            ret['title'] =  soup.select('.info_title_wrap')[0].text.replace('(개정판)','').strip()
+            ret['title'] =  soup.select('.info_title_wrap')[0].text.strip()
             try:
                 ret['desc'] = soup.select('.introduce_paragraph > br')[0].text.strip()
             except:
@@ -85,10 +83,12 @@ class SiteRidi(object):
             ret['genre'] = list(set(genre_list))
             ret['author'] = str(author_list).replace('[','').replace(']','').replace("'",'').replace(', ',',')
             ret['publisher'] = soup.select('.publisher_detail_link')[-1].text.strip()
+            ret['is_completed'] = soup.select('.metadata_item')[-1].text.strip()
             tags = []
             keyword = soup.select('.keyword_button')
             for keyword in keyword:
                 tags.append(keyword.text.replace('#',''))
+            #ret['tag'] = str(tags).replace('[','').replace(']','').replace("'",'').replace(', ',',')
             ret['tag'] = tags
             return ret
         except Exception as exception:
