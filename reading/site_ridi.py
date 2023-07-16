@@ -68,7 +68,7 @@ class SiteRidi(object):
             for author in author:
                 author_list.append(author.text.strip())
             ret = {}
-            ret['title'] =  soup.select('.info_title_wrap')[0].text.strip()
+            ret['title'] =  soup.select('.info_title_wrap')[0].text.replace('\(개정판\)','').strip()
             try:
                 ret['desc'] = soup.select('.introduce_paragraph > br')[0].text.strip()
             except:
