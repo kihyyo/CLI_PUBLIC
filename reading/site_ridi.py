@@ -50,7 +50,8 @@ class SiteRidi(object):
                     if author['role'] == 'original_author':
                         entity['author'] = author['name']
                 entity['publisher'] = r['publisher']
-                result_list.append(entity)
+                if entity['code'] != ''
+                    result_list.append(entity)
             ret['ret'] = 'success'
             ret['data'] = result_list
         else:
