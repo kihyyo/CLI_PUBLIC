@@ -350,7 +350,6 @@ class MakeInfo:
                 return
             return data['data']
         elif self.config['meta_source'] == 'ridibook':
-            logger.debug('2')
             data = SiteRidiBooks.search(title)
             if data['ret'] != 'success':
                 return
