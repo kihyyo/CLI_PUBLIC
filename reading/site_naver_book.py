@@ -184,6 +184,7 @@ class SiteNaverBook(SiteNaver):
         entity['title'] = cls.change_for_plex(root.xpath('//div[@class="book_info"]/h2/a/text()')[0].strip())
         entity['poster'] = root.xpath('//div[@class="book_info"]/div[1]/div/a/img')[0].attrib['src'].split('?')[0]
         entity['ratings'] = root.xpath('//*[@id="txt_desc_point"]/strong[1]/text()')[0]
+        entity['is_completed'] = '완결'
         tmp = root.xpath('//div[@class="book_info"]/div[2]/div[2]')[0].text_content().strip()
         tmps = tmp.split('|')
         #logger.warning(tmps)
