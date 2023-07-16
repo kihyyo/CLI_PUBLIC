@@ -255,6 +255,7 @@ class MakeInfo:
                     author = change(info['author']),
                     publisher = change(info['publisher']),
                     year = info['premiered'][0:4],
+                    is_completed = info['is_completed'],
                     month = info['premiered'][4:6] if len(info['premiered']) > 4 else '01',
                     day = info['premiered'][6:8] if len(info['premiered']) > 6 else '01',
                     tags = ','.join(info['tag']) if 'tag' in info  else '',
@@ -283,7 +284,7 @@ class MakeInfo:
                 search_name = search_name.replace('@ 完', '').replace('㉿ 完', '').strip()
                 #search_name = search_name.replace('(소설)', '').strip()
                 search_name = re.sub("\(.*?\)", '', search_name).strip()
-                
+        
                 match = re.search('\[(?P<author>.*?)\]', search_name)
                 if match:
                     search_name = re.sub("\[.*?\]", '', search_name).strip()
@@ -318,7 +319,7 @@ class MakeInfo:
             if data == None or len(data) == 0:
                 logger.error("책 없음")
                 continue
-            # print(data)
+
             return data , search_name
 
 
@@ -356,6 +357,7 @@ class MakeInfo:
             return data['data']
         elif self.config['meta_source'] == 'ridi':
             data = SiteRidi.search(title)
+            logger.debug(data)
             if data['ret'] != 'success':
                 return
             return data['data']
@@ -469,7 +471,7 @@ XML = '''<?xml version="1.0"?>
   <Genre>{genre}</Genre>
   <Tags>{tags}</Tags>
   <LanguageISO>ko</LanguageISO>
-  <Notes>완결</Notes>
+  <Notes>{is_completed}</Notes>
   <CoverArtist></CoverArtist>
   <Penciller></Penciller>
   <Inker>{inker}</Inker>
