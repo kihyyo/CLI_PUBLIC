@@ -80,7 +80,7 @@ class SiteNaverSeries():
                 url = 'https://series.naver.com/novel/volumeList.series?productNo=' + code.split('productNo=')[1]
             elif '/comic/' in code:
                 url = 'https://series.naver.com/comic/volumeList.series?productNo=' + code.split('productNo=')[1]
-            
+            ret['is_completed'] = '완결'
             ret['tag'] = ['네이버시리즈']
             data = requests.get(url, headers=default_headers).json()
             ret['premiered'] = data['resultData'][0]['lastVolumeUpdateDate'].split(' ')[0].replace('-', '')
