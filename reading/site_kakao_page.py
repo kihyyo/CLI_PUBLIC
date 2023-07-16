@@ -109,7 +109,7 @@ class SiteKakaoPage():
             ret['author'] = res['pageProps']['metaInfo']['author']
             ret['publisher'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['publisherName']
             ret['tag'] = ['카카오페이지']
-            ret['genre'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['category'].replace(" | ", " ")
+            ret['genre'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['category'].split(' | ')
             return ret
         except Exception as exception:
             logger.error('Exception:%s', exception)
