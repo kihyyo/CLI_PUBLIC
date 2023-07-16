@@ -256,9 +256,9 @@ class MakeInfo:
                     year = info['premiered'][0:4],
                     month = info['premiered'][4:6] if len(info['premiered']) > 4 else '01',
                     day = info['premiered'][6:8] if len(info['premiered']) > 6 else '01',
-                    tags = ', '.join(info['tag']) if 'tag' in info  else '',
+                    tags = ','.join(info['tag']) if 'tag' in info  else '',
                     inker = '',
-                    genre = info['genre'] if 'genre' in info  else '',
+                    genre = ','.join(info['genre']) if 'genre' in info  else '',
                 )
                 SupportFile.write_file(os.path.join(targetpath, 'info.xml'), tmp)
                 continue
