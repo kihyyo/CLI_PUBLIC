@@ -72,14 +72,7 @@ class SiteRidi(object):
                 author_list.append(author.text.strip())
             ret = {}
             ret['title'] =  soup.select('.info_title_wrap')[0].text.strip()
-            try:
-                ret['desc'] = soup.select('.introduce_paragraph > br')[0].text.strip()
-            except:
-                try:
-                    ret['desc'] = soup.select('.introduce_paragraph')[0].text.strip()
-                except Exception as exception:
-                    logger.error('Exception:%s', exception)
-                    logger.error(traceback.format_exc())
+            ret['desc'] = soup.select('.introduce_paragraph')[0].text.strip()
             ret['premiered'] = re.search('\d{4}\.\d{2}\.\d{2}\.', date).group().replace('.','').strip()
             ret['poster'] = cover
             genre_list = []
