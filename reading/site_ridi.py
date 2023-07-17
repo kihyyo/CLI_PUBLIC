@@ -65,7 +65,10 @@ class SiteRidi(object):
             url = f'https://ridibooks.com/books/{code}'
             res = requests.get(url, headers=default_headers)
             soup = BeautifulSoup(res.text, 'html.parser')
-            date = soup.select('.info_reg_date')[0].text.strip()
+            try:
+                date = soup.select('.info_reg_date')[0].text.strip()
+            except:
+                date = soup.select('.published_date_info')[0].text.strip()
             cover = "https:"+soup.select('.thumbnail')[0].get('data-original-cover')
             author_list = []
             author = soup.select('.js_author_detail_link')
