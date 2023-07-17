@@ -109,7 +109,7 @@ class MakeInfo:
                         d_temp = item
                         if org_title in d_temp['title'] :
                             temp.append(item)
-                            break
+
                     if len(temp)>0:
                         data = temp
 
