@@ -108,7 +108,10 @@ class SiteKakaoPage():
             ret['poster'] = 'https:' + res['pageProps']['metaInfo']['image']
             ret['author'] = res['pageProps']['metaInfo']['author']
             ret['publisher'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['publisherName']
-            ret['is_completed'] = '완결'
+            url = f'https://page.kakao.com/content/{code}'
+            response = requests.get(url, headers=cls.headers)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            ret['is_completed'] = soup.find("meta", attrs={"property": "article:section"})['content'].replace('연재물', '연재')
             ret['tag'] = ['카카오페이지']
             ret['genre'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['category'].split(' | ')
             return ret
