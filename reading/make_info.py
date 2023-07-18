@@ -60,8 +60,8 @@ class MakeInfo:
         for folder in sorted(os.listdir(source)):
             # 
             # info.xml 이 존재하면 스킵
-            if os.path.isfile(os.path.join(source,folder,"info.xml")) and (time.time() - os.path.getmtime(os.path.join(source,folder,"info.xml"))) < 172800 :
-                continue
+            # if os.path.isfile(os.path.join(source,folder,"info.xml")):
+            #     continue
             # 
             # 
             try:
