@@ -63,7 +63,12 @@ class SiteNaverSeries():
             ret = {}
             tmp = root.xpath('//meta[@property="og:title"]')[0].attrib['content']
             ret['title'] = re.sub("\[.*?\]", '', tmp).strip()
-            ret['desc'] = root.xpath('//meta[@property="og:description"]')[0].attrib['content']
+            element = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[1]/span').pop()
+            try:
+                desc_element = root.xpath('//*[@id="content"]/div[2]/div[2]')[0]
+            except IndexError:
+                desc_element = root.xpath('//*[@id="content"]/div[2]')[0]
+            ret['desc'] = desc_element.text_content()
 
             try:
                 ret['poster'] = root.xpath('//*[@id="container"]/div[1]/a/img')[0].attrib['src'].split('?')[0]
