@@ -1,5 +1,5 @@
 import os, sys, traceback, json, urllib.parse, requests, argparse, yaml, platform, time, threading, re, base64, fnmatch
-import traceback
+import traceback, difflib
 if platform.system() == 'Windows':
     sys.path += ["C:\SJVA3\lib2", "C:\SJVA3\data\custom", "C:\SJVA3_DEV"]
 else:
@@ -26,16 +26,26 @@ class SiteRidi(object):
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.79",
     "Referer": "https://ridibooks.com/",
     }
-
+    
+    @classmethod
+    def remove_special_char(cls, text):
+        return re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》：]', '', text)
+    
+    @classmethod
+    def similar(cls, seq1, seq2):
+        return difflib.SequenceMatcher(a=cls.remove_special_char(seq1.lower()), b=cls.remove_special_char(seq2.lower())).ratio()
+    
+    
     @classmethod
     def search(cls, title):
+        #url = f'https://ridibooks.com/api/search-api/search?keyword={quote(title)}&adult_exclude=n&where%5B%5D=book&where%5B%5D=author&what=instant&site=ridi-store'
         url = f'https://ridibooks.com/api/search-api/search?keyword={quote(title)}&adult_exclude=n'
         response = requests.get(url, headers=cls.default_headers)
         ret = {}
         result_list = []
         if response.status_code == 200 :   
             res = response.json()
-            for r in res['book']['books']:
+            for r in res['books']:
                 entity = {}
                 try:
                     entity['code'] = r['series_prices_info'][0]['series_id']
@@ -50,10 +60,14 @@ class SiteRidi(object):
                     if author['role'] == 'original_author':
                         entity['author'] = author['name']
                 entity['publisher'] = r['publisher']
-                if entity['code'] != '':
+                if entity['code'] != '' and cls.similar((re.sub("\[.*?\]", '', title).strip()), (re.sub("\[.*?\]", '', entity['title']).strip())) > 0.7:
                     result_list.append(entity)
-            ret['ret'] = 'success'
-            ret['data'] = result_list
+            if result_list != []:            
+                ret['ret'] = 'success'
+                ret['data'] = result_list
+            else:
+                logger.warning("유효한 매칭 실패")
+                ret['ret'] = 'empty'
         else:
             logger.warning("검색 실패")
             ret['ret'] = 'empty'
