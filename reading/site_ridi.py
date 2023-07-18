@@ -101,7 +101,10 @@ class SiteRidi(object):
             ret['genre'] = list(set(genre_list))
             ret['author'] = ','.join(author_list)
             ret['publisher'] = soup.select('.publisher_detail_link')[-1].text.strip()
-            ret['is_completed'] = soup.select('.metadata_item')[-1].text.strip().replace('미완결','연재')
+            if '완결' not in ret['title']:
+                ret['is_completed'] = soup.select('.metadata_item')[-1].text.strip().replace('미완결','연재')
+            else:
+                ret['is_completed'] = '완결'
             tags = []
             keyword = soup.select('.keyword_button')
             for keyword in keyword:
