@@ -1,5 +1,6 @@
 import os, sys, traceback, json, urllib.parse, requests, argparse, yaml, platform, time, threading, re, base64, fnmatch
 import traceback, difflib
+from site_utils import Utils
 if platform.system() == 'Windows':
     sys.path += ["C:\SJVA3\lib2", "C:\SJVA3\data\custom", "C:\SJVA3_DEV"]
 else:
@@ -27,15 +28,7 @@ class SiteRidi(object):
     "Referer": "https://ridibooks.com/",
     }
     
-    @classmethod
-    def remove_special_char(cls, text):
-        return re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》：]', '', text)
-    
-    @classmethod
-    def similar(cls, seq1, seq2):
-        return difflib.SequenceMatcher(a=cls.remove_special_char(seq1.lower()), b=cls.remove_special_char(seq2.lower())).ratio()
-    
-    
+
     @classmethod
     def search(cls, title):
         #url = f'https://ridibooks.com/api/search-api/search?keyword={quote(title)}&adult_exclude=n&where%5B%5D=book&where%5B%5D=author&what=instant&site=ridi-store'
@@ -60,7 +53,7 @@ class SiteRidi(object):
                     if author['role'] == 'original_author':
                         entity['author'] = author['name']
                 entity['publisher'] = r['publisher']
-                if entity['code'] != '' and cls.similar((re.sub("\[.*?\]", '', title).strip()), (re.sub("\[.*?\]", '', entity['title']).strip())) > 0.7:
+                if entity['code'] != '' and Utils.similar((re.sub("\[.*?\]", '', title).strip()), (re.sub("\[.*?\]", '', entity['title']).strip())) > 0.7:
                     result_list.append(entity)
             if result_list != []:            
                 ret['ret'] = 'success'
