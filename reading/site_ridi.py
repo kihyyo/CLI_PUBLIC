@@ -29,7 +29,7 @@ class SiteRidi(object):
 
     @classmethod
     def search(cls, title):
-        url = f'https://ridibooks.com/api/search-api/search?adult_exclude=n&keyword={quote(title)}&what=base&where%5B%5D=book&where%5B%5D=author&site=ridi-store'
+        url = f'https://ridibooks.com/api/search-api/search?keyword={quote(title)}&adult_exclude=n'
         response = requests.get(url, headers=cls.default_headers)
         ret = {}
         result_list = []
