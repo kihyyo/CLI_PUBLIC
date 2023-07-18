@@ -60,8 +60,8 @@ class MakeInfo:
         for folder in sorted(os.listdir(source)):
             # 
             # info.xml 이 존재하면 스킵
-            # if os.path.isfile(os.path.join(source,folder,"info.xml")):
-            #     continue
+            if os.path.isfile(os.path.join(source,folder,"info.xml")) and (time.time() - os.path.getmtime(os.path.join(source,folder,"info.xml"))) < 172800 :
+                continue
             # 
             # 
             try:
@@ -84,10 +84,12 @@ class MakeInfo:
 
                 if is_folder == False:
                     search_name = os.path.splitext(folder)[0]
-
-                data,title_auth = self.input_title(search_name)
-                
-                if data is None:
+                try:
+                    data,title_auth = self.input_title(search_name)
+            
+                    if data is None:
+                        continue
+                except:
                     continue
 
                 print(title_auth)
@@ -109,7 +111,7 @@ class MakeInfo:
                         d_temp = item
                         if org_title in d_temp['title'] :
                             temp.append(item)
-
+ 
                     if len(temp)>0:
                         data = temp
 
@@ -283,7 +285,7 @@ class MakeInfo:
                 search_name = folder
                 search_name = search_name.replace('@ 完', '').replace('㉿ 完', '').strip()
                 #search_name = search_name.replace('(소설)', '').strip()
-                #search_name = re.sub("\(.*?\)", '', search_name).strip()
+                #earch_name = re.sub("\[.*?\]", '', search_name).strip()
         
                 match = re.search('\[(?P<author>.*?)\]', search_name)
                 if match:
@@ -357,7 +359,6 @@ class MakeInfo:
             return data['data']
         elif self.config['meta_source'] == 'ridi':
             data = SiteRidi.search(title)
-            logger.debug(data)
             if data['ret'] != 'success':
                 return
             return data['data']
