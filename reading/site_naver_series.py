@@ -3,7 +3,7 @@ import traceback, unicodedata
 from datetime import datetime
 import urllib.request as py_urllib2
 import urllib.parse as py_urllib #urlencode
-
+from site_utils import Utils
 from lxml import html, etree
 import xmltodict
 
@@ -21,25 +21,24 @@ import re
 from collections import OrderedDict 
 
 
-
 class SiteNaverSeries():
     @classmethod
     def search(cls, title, auth=''):
 
         url = f"https://series.naver.com/search/search.series?t=all&fs=default&q={quote(title)}"
-        logger.debug(url)
+
         text = requests.get(url, headers=default_headers).text
         root = lxml.html.fromstring(text)
 
         tags = root.xpath('//ul[@class="lst_list"]/li')
-        logger.debug(tags)
+
         ret = []
 
         for tag in tags:
             entity = {}
             entity['code'] = tag.xpath('.//a')[0].attrib['href']
             tmp = None
-            logger.debug(d(entity))
+
             if '/novel/' in entity['code']:
                 tmp = 'nov'
             elif '/comic/' in entity['code']:
@@ -47,10 +46,10 @@ class SiteNaverSeries():
             if tmp != None:
                 
                 entity['title'] = tag.xpath('.//a[@class="N=a:%s.title"]' % tmp)[0].text_content().replace('\n', '').replace('\t', '')
-                logger.debug(d(entity))
-                entity['author'] = tag.xpath('.//span[@class="author"]')[0].text_content().replace('\n', '').replace('\t', '')
 
-                ret.append(entity)
+                entity['author'] = tag.xpath('.//span[@class="author"]')[0].text_content().replace('\n', '').replace('\t', '')
+                if Utils.similar((re.sub("\[.*?\]", '', title).strip()), (re.sub("\[.*?\]", '', entity['title']).strip())) > 0.7:
+                    ret.append(entity)
         return ret
 
     @classmethod
