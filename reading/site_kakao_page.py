@@ -100,7 +100,7 @@ class SiteKakaoPage():
     @classmethod
     def info(cls, code):
         try:
-            url = f"https://page.kakao.com/_next/data/2.12.1/ko/content/{code}.json?tab_type=about&seriesId={code}"
+            url = f"https://page.kakao.com/_next/data/2.12.2/ko/content/{code}.json?tab_type=about&seriesId={code}"
             res = requests.get(url, headers=cls.headers).json()
             ret = {}
             ret['title'] = res['pageProps']['metaInfo']['ogTitle']
