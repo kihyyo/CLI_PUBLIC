@@ -283,7 +283,7 @@ class MakeInfo:
                 search_name = folder
                 search_name = search_name.replace('@ 完', '').replace('㉿ 完', '').strip()
                 #search_name = search_name.replace('(소설)', '').strip()
-                search_name = re.sub("\(.*?\)", '', search_name).strip()
+                #search_name = re.sub("\(.*?\)", '', search_name).strip()
         
                 match = re.search('\[(?P<author>.*?)\]', search_name)
                 if match:
