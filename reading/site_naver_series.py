@@ -63,12 +63,7 @@ class SiteNaverSeries():
             ret = {}
             tmp = root.xpath('//meta[@property="og:title"]')[0].attrib['content']
             ret['title'] = re.sub("\[.*?\]", '', tmp).strip()
-            element = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[1]/span').pop()
-            try:
-                desc_element = root.xpath('//*[@id="content"]/div[2]/div[2]')[0]
-            except IndexError:
-                desc_element = root.xpath('//*[@id="content"]/div[2]')[0]
-            ret['desc'] = desc_element.text_content()
+            ret['desc'] = root.xpath('//meta[@property="og:description"]')[0].attrib['content']
 
             try:
                 ret['poster'] = root.xpath('//*[@id="container"]/div[1]/a/img')[0].attrib['src'].split('?')[0]
@@ -76,9 +71,24 @@ class SiteNaverSeries():
                 ret['poster'] = root.xpath('//*[@id="container"]/div[1]/span/img')[0].attrib['src'].split('?')[0]
 
             ret['genre'] = [root.xpath('//*[@id="content"]/ul[1]/li/ul/li[2]/span/a')[0].text_content()]
-            ret['author'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[3]/a')[0].text_content()
-            ret['publisher'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[5]/a')[0].text_content()
-            logger.debug(ret['publisher'])
+            try:
+                author = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[3]/a')[0].text_content()
+            except :
+                author = ''
+            try:
+                publisher = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[4]/a')[0].text_content()
+            except :
+                publisher = ''
+
+            try:
+                sixth_element = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[6]')[0]
+            except:
+                ret['author'] = author
+                ret['publisher'] = publisher
+            else:
+                ret['author'] = author + ', ' + root.xpath('//*[@id="content"]/ul[1]/li/ul/li[4]/a')[0].text_content()
+                ret['publisher'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[5]/a')[0].text_content()
+                ret['is_completed'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[1]/span')[0].text_content()
 
             if '/novel/' in code:
                 url = 'https://series.naver.com/novel/volumeList.series?productNo=' + code.split('productNo=')[1]
@@ -89,6 +99,7 @@ class SiteNaverSeries():
             data = requests.get(url, headers=default_headers).json()
             ret['premiered'] = data['resultData'][0]['lastVolumeUpdateDate'].split(' ')[0].replace('-', '')
             return ret
+        
         except Exception as exception:
             logger.error('Exception:%s', exception)
             logger.error(traceback.format_exc())
