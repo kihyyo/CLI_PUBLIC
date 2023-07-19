@@ -85,16 +85,16 @@ class SiteNaverSeries():
             except:
                 ret['author'] = author
                 ret['publisher'] = publisher
+                ret['is_completed'] = '완결'
             else:
                 ret['author'] = author + ', ' + root.xpath('//*[@id="content"]/ul[1]/li/ul/li[4]/a')[0].text_content()
                 ret['publisher'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[5]/a')[0].text_content()
                 ret['is_completed'] = root.xpath('//*[@id="content"]/ul[1]/li/ul/li[1]/span')[0].text_content()
-
             if '/novel/' in code:
                 url = 'https://series.naver.com/novel/volumeList.series?productNo=' + code.split('productNo=')[1]
             elif '/comic/' in code:
                 url = 'https://series.naver.com/comic/volumeList.series?productNo=' + code.split('productNo=')[1]
-            ret['is_completed'] = '완결'
+            
             ret['tag'] = ['네이버시리즈']
             data = requests.get(url, headers=default_headers).json()
             ret['premiered'] = data['resultData'][0]['lastVolumeUpdateDate'].split(' ')[0].replace('-', '')
