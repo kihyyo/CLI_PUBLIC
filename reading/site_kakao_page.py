@@ -4,6 +4,7 @@ import traceback, unicodedata
 from datetime import datetime
 import urllib.request as py_urllib2
 import urllib.parse as py_urllib #urlencode
+from bs4 import BeautifulSoup
 
 from lxml import html, etree
 import xmltodict
@@ -111,7 +112,7 @@ class SiteKakaoPage():
             url = f'https://page.kakao.com/content/{code}'
             response = requests.get(url, headers=cls.headers)
             soup = BeautifulSoup(response.text, 'html.parser')
-            ret['is_completed'] = soup.find("meta", attrs={"property": "article:section"})['content'].replace('연재물', '연재')
+            ret['is_completed'] = soup.find("meta", attrs={"property": "article:section"})['content'].replace('연재중', '연재')
             ret['tag'] = ['카카오페이지']
             ret['genre'] = res['pageProps']['dehydratedState']['queries'][0]['state']['data']['contentHomeAbout']['detail']['category'].split(' | ')
             return ret
