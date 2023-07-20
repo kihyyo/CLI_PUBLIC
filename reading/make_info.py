@@ -405,7 +405,7 @@ class MakeInfo:
             tmp = select_item['pubdate'][:10]
             info['premiered'] = tmp.replace("-","")
             info['author'] = select_item['author']
-            
+            info['is_completed'] = select_item['is_completed']
             data = info
             return data
         elif self.config['meta_source'] == 'ridibook':
