@@ -393,8 +393,7 @@ class MakeInfo:
             data = SiteNaverSeries.info(code)
             return data
         elif self.config['meta_source'] == 'kakaopage':
-            data = SiteKakaoPage.info(code)
-            data['premiered'] = select_item['premiered']
+            data = SiteKakaoPage.info(code, select_item)
             return data
         elif self.config['meta_source'] == 'kakaobook':
             info = {}
