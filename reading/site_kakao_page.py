@@ -112,7 +112,7 @@ class SiteKakaoPage():
             ret['is_completed'] = '연재' if '연재중' in select_item['overall'] else '완결'
             ret['tag'] = ['카카오페이지']
             ret['genre'] = res['data']['contentHomeInfo']['about']['detail']['category'].split(' | ')
-            ret['premiered'] = '20' + select_item['premiered'] if len(premiered) == 6 else select_item['premiered']
+            ret['premiered'] = '20' + select_item['premiered'] if len(select_item['premiered']) == 6 else select_item['premiered']
             return ret
         except Exception as exception:
             logger.error('Exception:%s', exception)
