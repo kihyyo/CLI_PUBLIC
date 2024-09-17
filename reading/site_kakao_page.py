@@ -113,6 +113,13 @@ class SiteKakaoPage():
             ret['tag'] = ['카카오페이지']
             ret['genre'] = res['data']['contentHomeInfo']['about']['detail']['category'].split(' | ')
             ret['premiered'] = '20' + select_item['premiered'] if len(select_item['premiered']) == 6 else select_item['premiered']
+            themeKeywordList = res['data']['contentHomeInfo']['about']['themeKeywordList']
+            tags = []
+            for theme in themeKeywordList:
+                title = theme['title']
+                if title not in tags:  # 중복 태그 방지
+                    tags.append(title)
+            ret['tag'] = tags
             return ret
         except Exception as exception:
             logger.error('Exception:%s', exception)
