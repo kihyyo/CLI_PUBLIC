@@ -79,7 +79,7 @@ class SiteKakaoPage():
                     entity = {}
                     entity['code'] = re.search('\d+',data['id']).group()
                     entity['title'] = re.search('작품,([^,]+)',data['altText']).group().replace('작품,','').strip()
-                    entity['premiered'] = re.search('\d{4}\.\d{2}\.\d{2}', data['altText']).group().replace('.','').strip()
+                    entity['premiered'] = re.search('\d{2}\.\d{2}\.\d{2}', data['altText']).group().replace('.','').strip()
                     entity['author'] = re.search('작가\s([^,]+)',data['altText']).group().replace('작가 ','').strip()
                     entity['overall'] = data['altText']
                     ret.append(entity)
