@@ -102,7 +102,7 @@ class SiteKakaoPage():
                 "seriesId": code
             }
             }
-            res = requests.post(url, json=data, headers=cls.headers)
+            res = requests.post(url, json=data, headers=cls.headers).json()
             ret = {}
             ret['title'] = select_item['title']
             ret['desc'] = res['data']['contentHomeInfo']['about']['description']
