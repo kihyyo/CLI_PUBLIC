@@ -93,7 +93,7 @@ class SiteKakaoPage():
     @classmethod
     def info(cls, code, select_item):
         encoded_string = urllib.parse.quote(select_item['title'])
-        cls.headers['Referer'] = f"https://page.kakao.com/search/result?keyword={encoded_string}",
+        cls.headers['Referer'] = f"https://page.kakao.com/search/result?keyword={encoded_string}"
         try:
             url = f"https://page.kakao.com/graphql"
             data = {
@@ -112,6 +112,7 @@ class SiteKakaoPage():
             ret['is_completed'] = '연재' if '연재중' in select_item['overall'] else '완결'
             ret['tag'] = ['카카오페이지']
             ret['genre'] = res['data']['contentHomeInfo']['about']['detail']['category'].split(' | ')
+            ret['premiered'] = '20' + select_item['premiered'] if len(premiered) == 6 else select_item['premiered']
             return ret
         except Exception as exception:
             logger.error('Exception:%s', exception)
