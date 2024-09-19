@@ -76,6 +76,7 @@ class SiteKakaoPage():
             ret = []
             if res.status_code == 200:
                 for data in res.json()['data']['searchKeyword']['list']:
+                    print(data)
                     entity = {}
                     entity['code'] = re.search('\d+',data['id']).group()
                     entity['title'] = re.search('작품,([^,]+)',data['altText']).group().replace('작품,','').strip()
