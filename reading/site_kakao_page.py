@@ -81,6 +81,7 @@ class SiteKakaoPage():
                     entity['title'] = re.search('작품,([^,]+)',data['altText']).group().replace('작품,','').strip()
                     entity['premiered'] = re.search('\d{2}\.\d{2}\.\d{2}', data['altText']).group().replace('.','').strip()
                     entity['author'] = re.search('작가\s([^,]+)',data['altText']).group().replace('작가 ','').strip()
+                    entity['thumbnail']= data['thumbnail']
                     entity['overall'] = data['altText']
                     ret.append(entity)
             else:
@@ -106,7 +107,7 @@ class SiteKakaoPage():
             ret = {}
             ret['title'] = select_item['title']
             ret['desc'] = res['data']['contentHomeInfo']['about']['description']
-            ret['poster'] = 'https:' + res['data']['contentHomeInfo']['about']['screenshotList'][0]
+            ret['poster'] = 'https:' + select_item['thumbnail']
             ret['author'] = res['data']['contentHomeInfo']['about']['authorList'][0]['name']
             ret['publisher'] = res['data']['contentHomeInfo']['about']['detail']['publisherName']
             ret['is_completed'] = '연재' if '연재중' in select_item['overall'] else '완결'
