@@ -24,54 +24,21 @@ class SiteKakaoPage():
     }
     @classmethod
     def search(cls, title, auth=''):
-        query = '''
-            query SearchKeyword($input: String!) {
-            searchKeyword(searchKeywordInput: { keyword: $input }) {
-                id
-                list {
-                ...NormalListViewItem
-                }
-                total
-                isEnd
-                keyword
-                sortOptionList {
-                ...SortOption
-                }
-                selectedSortOption {
-                ...SortOption
-                }
-                categoryOptionList {
-                ...SortOption
-                }
-                selectedCategoryOption {
-                ...SortOption
-                }
-                showOnlyComplete
-                page
-            }
-            }
-
-            fragment NormalListViewItem on NormalListViewItem {
-            id
-            type
-            altText
-            # ... 프래그먼트 내용은 동일하게 유지합니다.
-            }
-
-            fragment SortOption on SortOption {
-            id
-            name
-            param
-            }
-            '''
         try:
             url = f'https://page.kakao.com/search/result?keyword={quote(title)}'
             cls.headers['Referer'] = url
             variables = {"input": title}
             data = {
-                'query': query,
-                'variables': variables
-            }
+                  "query": "\n    query SearchKeyword($input: SearchKeywordInput!) {\n  searchKeyword(searchKeywordInput: $input) {\n    id\n    list {\n      ...NormalListViewItem\n    }\n    total\n    isEnd\n    keyword\n    sortOptionList {\n      ...SortOption\n    }\n    selectedSortOption {\n      ...SortOption\n    }\n    categoryOptionList {\n      ...SortOption\n    }\n    selectedCategoryOption {\n      ...SortOption\n    }\n    showOnlyComplete\n    page\n  }\n}\n    \n    fragment NormalListViewItem on NormalListViewItem {\n  id\n  type\n  altText\n  ticketUid\n  thumbnail\n  badgeList\n  ageGradeBadge\n  statusBadge\n  ageGrade\n  isAlaramOn\n  row1\n  row2\n  row3 {\n    id\n    metaList\n  }\n  row4\n  row5\n  scheme\n  continueScheme\n  nextProductScheme\n  continueData {\n    ...ContinueInfoFragment\n  }\n  seriesId\n  isCheckMode\n  isChecked\n  isReceived\n  isHelixGift\n  showPlayerIcon\n  rank\n  isSingle\n  singleSlideType\n  ageGrade\n  selfCensorship\n  eventLog {\n    ...EventLogFragment\n  }\n  giftEventLog {\n    ...EventLogFragment\n  }\n}\n    \n\n    fragment ContinueInfoFragment on ContinueInfo {\n  title\n  isFree\n  productId\n  lastReadProductId\n  scheme\n  continueProductType\n  hasNewSingle\n  hasUnreadSingle\n}\n    \n\n    fragment EventLogFragment on EventLog {\n  fromGraphql\n  click {\n    layer1\n    layer2\n    setnum\n    ordnum\n    copy\n    imp_id\n    imp_provider\n  }\n  eventMeta {\n    id\n    name\n    subcategory\n    category\n    series\n    provider\n    series_id\n    type\n  }\n  viewimp_contents {\n    type\n    name\n    id\n    imp_area_ordnum\n    imp_id\n    imp_provider\n    imp_type\n    layer1\n    layer2\n  }\n  customProps {\n    landing_path\n    view_type\n    helix_id\n    helix_yn\n    helix_seed\n    content_cnt\n    event_series_id\n    event_ticket_type\n    play_url\n    banner_uid\n  }\n}\n    \n\n    fragment SortOption on SortOption {\n  id\n  name\n  param\n}\n    ",
+                  "variables": {
+                    "input": {
+                      "keyword": title,
+                      "categoryUid": "0",
+                      "showOnlyComplete": False,
+                      "sortType": "Accuracy"
+                    }
+                  }
+                }
             res = requests.post('https://page.kakao.com/graphql', json=data, headers=cls.headers)
             ret = []
             if res.status_code == 200:
@@ -82,7 +49,7 @@ class SiteKakaoPage():
                     entity['title'] = re.search('작품,([^,]+)',data['altText']).group().replace('작품,','').strip()
                     entity['premiered'] = re.search('\d{2}\.\d{2}\.\d{2}', data['altText']).group().replace('.','').strip()
                     entity['author'] = re.search('작가\s([^,]+)',data['altText']).group().replace('작가 ','').strip()
-                    entity['thumbnail']= data['thumbnail']
+                    entity['thumbnail']= 'https:' + data['thumbnail']
                     entity['overall'] = data['altText']
                     ret.append(entity)
             else:
@@ -108,7 +75,7 @@ class SiteKakaoPage():
             ret = {}
             ret['title'] = select_item['title']
             ret['desc'] = res['data']['contentHomeInfo']['about']['description']
-            ret['poster'] = 'https:' + select_item['thumbnail']
+            ret['poster'] = select_item['thumbnail']
             ret['author'] = res['data']['contentHomeInfo']['about']['authorList'][0]['name']
             ret['publisher'] = res['data']['contentHomeInfo']['about']['detail']['publisherName']
             ret['is_completed'] = '연재' if '연재중' in select_item['overall'] else '완결'
